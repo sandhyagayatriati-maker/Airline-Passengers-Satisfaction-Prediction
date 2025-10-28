@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>✈ Airline Passenger Satisfaction Predictor</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Airline Passenger Satisfaction Predictor</h1>
+    <form id="prediction-form">
+
+      <label>Gender:</label>
+      <select name="Gender" required>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <label>Age:</label>
+      <input type="number" name="Age" required>
+
+      <label>Customer Type:</label>
+      <select name="Customer Type" required>
+        <option>Returning</option>
+        <option>First-time</option>
+      </select>
+
+      <label>Type of Travel:</label>
+      <select name="Type of Travel" required>
+        <option>Business</option>
+        <option>Personal</option>
+      </select>
+
+      <label>Class:</label>
+      <select name="Class" required>
+        <option>Economy</option>
+        <option>Business</option>
+        <option>First</option>
+      </select>
+
+      <label>Flight Distance:</label>
+      <input type="number" name="Flight Distance" required>
+
+      <label>Departure Delay:</label>
+      <input type="number" name="Departure Delay" required>
+
+      <label>Arrival Delay:</label>
+      <input type="number" name="Arrival Delay" required>
+
+      <label>Departure and Arrival Time Convenience (1–5):</label>
+      <input type="range" name="Departure and Arrival Time Convenience" min="1" max="5" step="1" required>
+
+      <label>Ease of Online Booking (1–5):</label>
+      <input type="range" name="Ease of Online Booking" min="1" max="5" step="1" required>
+
+      <label>Check-in Service (1–5):</label>
+      <input type="range" name="Check-in Service" min="1" max="5" step="1" required>
+
+      <label>Online Boarding (1–5):</label>
+      <input type="range" name="Online Boarding" min="1" max="5" step="1" required>
+
+      <label>Gate Location (1–5):</label>
+      <input type="range" name="Gate Location" min="1" max="5" step="1" required>
+
+      <label>On-board Service (1–5):</label>
+      <input type="range" name="On-board Service" min="1" max="5" step="1" required>
+
+      <label>Seat Comfort (1–5):</label>
+      <input type="range" name="Seat Comfort" min="1" max="5" step="1" required>
+
+      <label>Leg Room Service (1–5):</label>
+      <input type="range" name="Leg Room Service" min="1" max="5" step="1" required>
+
+      <label>Cleanliness (1–5):</label>
+      <input type="range" name="Cleanliness" min="1" max="5" step="1" required>
+
+      <label>Food and Drink (1–5):</label>
+      <input type="range" name="Food and Drink" min="1" max="5" step="1" required>
+
+      <label>In-flight Service (1–5):</label>
+      <input type="range" name="In-flight Service" min="1" max="5" step="1" required>
+
+      <label>In-flight Wifi Service (1–5):</label>
+      <input type="range" name="In-flight Wifi Service" min="1" max="5" step="1" required>
+
+      <label>In-flight Entertainment (1–5):</label>
+      <input type="range" name="In-flight Entertainment" min="1" max="5" step="1" required>
+
+      <label>Baggage Handling (1–5):</label>
+      <input type="range" name="Baggage Handling" min="1" max="5" step="1" required>
+
+      <button type="submit">Predict Satisfaction</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById("prediction-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch("/predict", { method: "POST", body: formData });
+      const result = await response.json();
+      document.getElementById("result").innerHTML =
+        result.error ? `<p style='color:red'>Error: ${result.error}</p>` :
+        `<h3>Prediction: ${result.prediction}</h3><p>Confidence: ${result.probability}</p>`;
+    });
+  </script>
+</body>
+</html>
+
